@@ -2,7 +2,7 @@ package executor
 
 import (
 	"fmt"
-	"vfs/internal/command"
+	"vfs/src/internal/command"
 )
 
 func Execute(cmd string, args []string) (any, error) {
