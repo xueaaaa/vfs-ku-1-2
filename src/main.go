@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"strings"
-	"vfs/internal/command"
-	"vfs/internal/executor"
-	"vfs/internal/parser"
+	"vfs/src/internal/command"
+	"vfs/src/internal/executor"
+	"vfs/src/internal/parser"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
