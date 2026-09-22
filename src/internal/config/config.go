@@ -3,8 +3,8 @@ package config
 import "flag"
 
 type Config struct {
-	VfsPath    *string
-	ScriptPath *string
+	VfsPath    string
+	ScriptPath string
 }
 
 func New() Config {
@@ -13,7 +13,7 @@ func New() Config {
 	flag.Parse()
 
 	return Config{
-		VfsPath:    vfsPath,
-		ScriptPath: scriptPath,
+		VfsPath:    *vfsPath,
+		ScriptPath: *scriptPath,
 	}
 }

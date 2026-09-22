@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 	"vfs/src/internal/command"
+	"vfs/src/internal/config"
 	"vfs/src/internal/executor"
 	"vfs/src/internal/parser"
 
@@ -84,6 +87,35 @@ func main() {
 
 	content := container.NewBorder(nil, input, nil, nil, container.NewScroll(output))
 	w.SetContent(content)
+	w.Show()
 
-	w.ShowAndRun()
+	conf := config.New()
+	if conf.VfsPath != "" {
+		appendOutput(fmt.Sprintf("vfs path is set as %s", conf.VfsPath))
+	}
+	if conf.ScriptPath != "" {
+		appendOutput(fmt.Sprintf("script path is set as %s", conf.ScriptPath))
+
+		f, err := os.Open(conf.ScriptPath)
+		if err != nil {
+			appendOutput(err.Error())
+			return
+		}
+		defer f.Close()
+
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			line := strings.TrimSpace(scanner.Text())
+			if line == "" || strings.HasPrefix(line, "//") {
+				continue
+			}
+			runCommand(line)
+		}
+
+		if err := scanner.Err(); err != nil {
+			appendOutput(err.Error())
+		}
+	}
+
+	a.Run()
 }
