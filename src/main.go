@@ -128,6 +128,41 @@ func main() {
 				},
 			)
 
+			command.NewCommand(
+				"rev",
+				nil,
+				true,
+				func(args []string) (any, error) {
+					if len(args) != 1 {
+						return nil, fmt.Errorf("invalid count of arguments")
+					}
+
+					file, err := session.FindFile(args[0])
+					if err != nil {
+						return nil, fmt.Errorf("rev: %w", err)
+					}
+
+					runes := []rune(string(file.Content))
+					for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+						runes[i], runes[j] = runes[j], runes[i]
+					}
+					result := string(runes)
+
+					appendOutput(result)
+					return result, nil
+				},
+			)
+
+			command.NewCommand(
+				"clear",
+				nil,
+				true,
+				func(args []string) (any, error) {
+					output.SetText("")
+					appendOutput("console cleared")
+					return nil, nil
+				})
+
 			appendOutput(fmt.Sprintf("vfs %s loaded.\nRoot folder name: "+
 				"%s\nRoot subdirectories: %s\nRoot files: %s",
 				vfs.Name,
