@@ -1,0 +1,30 @@
+// Полноценная проверка ls/cd + новых команд rev и clear
+ls
+cd home
+ls
+cd user
+ls
+
+// rev на реальном файле
+rev notes.txt
+
+// rev на несуществующем файле — ошибка, не должна крашить программу
+rev missing.txt
+
+cd documents
+ls
+rev deep.txt
+
+cd ..
+cd ..
+cd ..
+ls
+
+// clear должен очистить окно вывода
+clear
+
+// после clear продолжаем работать как обычно
+ls
+cd etc
+ls
+exit
